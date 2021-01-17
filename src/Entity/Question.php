@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Question
      * @ORM\Column(type="string", length=255)
      */
     private $proof;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Quizz::class, mappedBy="question")
+     */
+    private $quizzs;
+
+    public function __construct()
+    {
+        $this->quizzs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,33 @@ class Question
     public function setProof(string $proof): self
     {
         $this->proof = $proof;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quizz[]
+     */
+    public function getQuizzs(): Collection
+    {
+        return $this->quizzs;
+    }
+
+    public function addQuizz(Quizz $quizz): self
+    {
+        if (!$this->quizzs->contains($quizz)) {
+            $this->quizzs[] = $quizz;
+            $quizz->addQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizz(Quizz $quizz): self
+    {
+        if ($this->quizzs->removeElement($quizz)) {
+            $quizz->removeQuestion($this);
+        }
 
         return $this;
     }

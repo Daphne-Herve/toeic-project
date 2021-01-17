@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +54,16 @@ class User
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Quizz::class, mappedBy="user")
+     */
+    private $quizzs;
+
+    public function __construct()
+    {
+        $this->quizzs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +150,33 @@ class User
     public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quizz[]
+     */
+    public function getQuizzs(): Collection
+    {
+        return $this->quizzs;
+    }
+
+    public function addQuizz(Quizz $quizz): self
+    {
+        if (!$this->quizzs->contains($quizz)) {
+            $this->quizzs[] = $quizz;
+            $quizz->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizz(Quizz $quizz): self
+    {
+        if ($this->quizzs->removeElement($quizz)) {
+            $quizz->removeUser($this);
+        }
 
         return $this;
     }
