@@ -1,12 +1,13 @@
-
-
-$kitty : yellow;
-$unicorn : pink;
+$backgroundlight: #faf8f2;
+$backgrounddark: #165076;
+$maintitle: #398ece;
+$subtitle: #c7a793;
+$lettercolor: #eaddc2;
 
 body {
-    background-color: $unicorn;
+  background-color: $backgroundlight;
 }
 
-p {
-    color: $kitty;
+h1 {
+  color: $maintitle;
 }

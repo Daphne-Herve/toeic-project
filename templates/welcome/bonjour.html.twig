@@ -2,20 +2,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- ... -->
 
     {% block stylesheets %}
-        {# 'app' must match the first argument to addEntry() in webpack.config.js #}
         {{ encore_entry_link_tags('app') }}
-
-        <!-- Renders a link tag (if your module requires any CSS)
-             <link rel="stylesheet" href="/build/app.scss"> -->
-        <link rel="stylesheet" href="/assets/styles/app.scss">
+        <link rel="stylesheet" href="/build/app.css">
     {% endblock %}
     <title>Hello</title></head>
 <body>
 <!-- ... -->
-<div><p>Hello Sass World</p></div>
+<div><h1>Hello english world</h1></div>
+<div><img src="/images/toeic-alphabet.jpg" alt="image-alphabet-toeic"></div>
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
